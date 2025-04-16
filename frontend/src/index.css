@@ -1,0 +1,83 @@
+/* Base styles */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f9f9f9;
+  color: #030303;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* YouTube-like colors */
+:root {
+  --yt-red: #ff0000;
+  --yt-red-hover: #cc0000;
+  --yt-text-primary: #030303;
+  --yt-text-secondary: #606060;
+  --yt-bg-primary: #ffffff;
+  --yt-bg-secondary: #f9f9f9;
+  --yt-border: #e5e5e5;
+}
+
+/* Layout */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-1 {
+  flex: 1;
+}
+.min-h-screen {
+  min-height: 100vh;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.bg-gray-100 {
+  background-color: var(--yt-bg-secondary);
+}
+
+/* YouTube-specific classes */
+.yt-red {
+  color: var(--yt-red);
+}
+.yt-bg-red {
+  background-color: var(--yt-red);
+}
+.yt-text-primary {
+  color: var(--yt-text-primary);
+}
+.yt-text-secondary {
+  color: var(--yt-text-secondary);
+}
+.yt-bg-primary {
+  background-color: var(--yt-bg-primary);
+}
+.yt-bg-secondary {
+  background-color: var(--yt-bg-secondary);
+}
+.yt-border {
+  border-color: var(--yt-border);
+}
+
+/* Media queries */
+@media (min-width: 768px) {
+  .md\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+} 
