@@ -1,3 +1,7 @@
+![image](https://github.com/user-attachments/assets/b7420859-45e8-43d4-b712-7c3ffd935c29)
+
+
+
 # Streamline - Video Streaming Platform
 
 A modern video streaming platform built with the MERN stack (MongoDB, Express, React, Node.js).
