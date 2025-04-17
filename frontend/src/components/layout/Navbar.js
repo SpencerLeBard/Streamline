@@ -15,15 +15,15 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="yt-bg-primary shadow-sm py-2 px-4 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <nav className="yt-bg-primary shadow-sm py-4 px-6 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex items-center">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="text-red-600 text-2xl font-bold">VidStream</span>
+        <Link to="/" className="flex items-center mr-10">
+          <span className="text-red-600 text-2xl font-bold whitespace-nowrap">VidStream</span>
         </Link>
 
         {/* Search Bar */}
-        <div className="flex-1 max-w-2xl mx-4">
+        <div className="flex-1 mx-4 max-w-xl">
           <form onSubmit={handleSearch} className="relative">
             <input
               type="text"
@@ -42,8 +42,8 @@ const Navbar = () => {
         </div>
 
         {/* Right Side Navigation - Simplified */}
-        <div className="flex items-center space-x-4">
-          <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+        <div className="flex items-center ml-4">
+          <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
             <span className="text-gray-600 text-sm">👤</span>
           </div>
         </div>

@@ -88,16 +88,16 @@ const Home = () => {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold yt-text-primary mb-4">Discover Videos</h1>
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold yt-text-primary mb-6">Discover Videos</h1>
         <div className="flex flex-wrap gap-2 mb-4">
           {categories.map(category => (
             <button
               key={category}
-              className={`px-4 py-2 rounded-full text-sm ${
+              className={`px-4 py-2 rounded-full text-sm transition-colors ${
                 selectedCategory === category
                   ? 'yt-bg-red text-white'
-                  : 'bg-gray-200 text-gray-800'
+                  : 'bg-gray-200 yt-text-secondary hover:bg-gray-300'
               }`}
               onClick={() => handleCategoryChange(category)}
             >
@@ -114,7 +114,7 @@ const Home = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {videos.map(video => (
-            <div key={video.id} className="yt-bg-primary rounded-lg overflow-hidden shadow-lg">
+            <div key={video.id} className="yt-bg-primary rounded-lg overflow-hidden shadow video-card">
               <Link to={`/video/${video.id}`}>
                 <img 
                   src={video.thumbnail} 
@@ -125,19 +125,19 @@ const Home = () => {
               <div className="p-4">
                 <Link 
                   to={`/video/${video.id}`}
-                  className="text-lg font-semibold yt-text-primary hover:text-red-600"
+                  className="text-lg font-semibold yt-text-primary hover:text-red-600 line-clamp-2"
                 >
                   {video.title}
+                </Link>
+                <Link 
+                  to={`/channel/${video.channelId}`}
+                  className="text-sm yt-text-secondary hover:text-red-600 mt-2 block"
+                >
+                  {video.channelName}
                 </Link>
                 <p className="text-sm yt-text-secondary mt-1">
                   {video.views.toLocaleString()} views • {video.timestamp}
                 </p>
-                <Link 
-                  to={`/channel/${video.channelId}`}
-                  className="text-sm yt-text-secondary hover:text-red-600"
-                >
-                  {video.channelName}
-                </Link>
               </div>
             </div>
           ))}

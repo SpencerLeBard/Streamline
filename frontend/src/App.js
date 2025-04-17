@@ -25,7 +25,7 @@ function App() {
       <Navbar />
       <div className="flex flex-1">
         <Sidebar />
-        <main className="flex-1 px-4 md:px-6 py-8">
+        <main className="flex-1 px-6 py-8 overflow-y-auto">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/video/:videoId" element={<VideoPage />} />
