@@ -2,21 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos]   = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  
+
   const categories = [
-    'All', 'Music', 'Gaming', 'Sports', 'News', 
-    'Education', 'Entertainment', 'Technology'
+    'All',
+    'Music',
+    'Gaming',
+    'Sports',
+    'News',
+    'Education',
+    'Entertainment',
+    'Technology',
   ];
 
+  /* ─────────────────────────── load mock data ─────────────────────────── */
   useEffect(() => {
-    // Simulate loading videos
     setLoading(true);
-    
-    setTimeout(() => {
-      // Mock data
+
+    const timer = setTimeout(() => {
       const mockVideos = [
         {
           id: '1',
@@ -28,7 +33,7 @@ const Home = () => {
           timestamp: '2 weeks ago',
           channelName: 'Code Masters',
           channelId: '1',
-          category: 'Education'
+          category: 'Education',
         },
         {
           id: '2',
@@ -40,7 +45,7 @@ const Home = () => {
           timestamp: '3 days ago',
           channelName: 'React Experts',
           channelId: '2',
-          category: 'Technology'
+          category: 'Technology',
         },
         {
           id: '3',
@@ -52,7 +57,7 @@ const Home = () => {
           timestamp: '1 week ago',
           channelName: 'Backend Dev',
           channelId: '3',
-          category: 'Technology'
+          category: 'Technology',
         },
         {
           id: '4',
@@ -64,87 +69,119 @@ const Home = () => {
           timestamp: '1 month ago',
           channelName: 'CSS Wizards',
           channelId: '4',
-          category: 'Education'
-        }
+          category: 'Education',
+        },
       ];
-      
-      // Filter by category if not "All"
-      const filteredVideos = selectedCategory === 'All' 
-        ? mockVideos 
-        : mockVideos.filter(video => video.category === selectedCategory);
-      
+
+      const filteredVideos =
+        selectedCategory === 'All'
+          ? mockVideos
+          : mockVideos.filter((v) => v.category === selectedCategory);
+
       setVideos(filteredVideos);
       setLoading(false);
     }, 800);
+
+    return () => clearTimeout(timer);
   }, [selectedCategory]);
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-  };
+  /* ────────────────────────────── handlers ────────────────────────────── */
+  const handleCategoryChange = (category) => setSelectedCategory(category);
 
+  /* ─────────────────────────────── render ─────────────────────────────── */
   if (loading) {
-    return <div className="text-center p-8 yt-text-primary">Loading videos...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center text-lg text-gray-600">
+        Loading videos…
+      </div>
+    );
   }
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold yt-text-primary mb-6">Discover Videos</h1>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {categories.map(category => (
+    <div className="min-h-screen bg-white">
+      {/* ───────────────────────────── header ───────────────────────────── */}
+      <header className="sticky top-0 z-10 w-full border-b bg-white/90 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          {/* slim, wide logo on the left */}
+          <Link to="/" className="flex items-center">
+            <img
+              src="/SkinnyLogo.jpeg"
+              alt="Streamline"
+              className="h-6 w-auto object-contain sm:h-7"
+            />
+          </Link>
+          <div className="flex-1 mx-8">
+            {/* Additional space for navbar content */}
+          </div>
+        </div>
+      </header>
+
+      {/* ───────────────────── horizontal category bar ───────────────────── */}
+      <nav className="mx-auto max-w-7xl overflow-x-auto px-6 py-4">
+        <div className="flex gap-4">
+          {categories.map((category) => (
             <button
               key={category}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                selectedCategory === category
-                  ? 'yt-bg-red text-white'
-                  : 'bg-gray-200 yt-text-secondary hover:bg-gray-300'
-              }`}
               onClick={() => handleCategoryChange(category)}
+              className={`whitespace-nowrap rounded-full px-4 py-2 text-sm transition-colors ${
+                selectedCategory === category
+                  ? 'bg-red-600 font-semibold text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
             >
               {category}
             </button>
           ))}
         </div>
-      </div>
+      </nav>
 
-      {videos.length === 0 ? (
-        <div className="text-center yt-text-secondary mt-10">
-          No videos found. Try a different category or check back later.
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {videos.map(video => (
-            <div key={video.id} className="yt-bg-primary rounded-lg overflow-hidden shadow video-card">
-              <Link to={`/video/${video.id}`}>
-                <img 
-                  src={video.thumbnail} 
-                  alt={video.title} 
-                  className="w-full h-40 object-cover"
-                />
-              </Link>
-              <div className="p-4">
-                <Link 
-                  to={`/video/${video.id}`}
-                  className="text-lg font-semibold yt-text-primary hover:text-red-600 line-clamp-2"
-                >
-                  {video.title}
+      {/* ─────────────────────────── video grid ─────────────────────────── */}
+      <main className="mx-auto max-w-7xl px-6 pb-10">
+        {videos.length === 0 ? (
+          <div className="mt-20 text-center text-gray-500">
+            No videos found. Try another category.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {videos.map((video) => (
+              <div
+                key={video.id}
+                className="overflow-hidden rounded-lg bg-white shadow hover:shadow-lg transition-shadow"
+              >
+                <Link to={`/video/${video.id}`}>
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="h-48 w-full object-cover transition-transform duration-200 hover:scale-[1.03]"
+                  />
                 </Link>
-                <Link 
-                  to={`/channel/${video.channelId}`}
-                  className="text-sm yt-text-secondary hover:text-red-600 mt-2 block"
-                >
-                  {video.channelName}
-                </Link>
-                <p className="text-sm yt-text-secondary mt-1">
-                  {video.views.toLocaleString()} views • {video.timestamp}
-                </p>
+
+                <div className="p-4">
+                  <Link
+                    to={`/video/${video.id}`}
+                    className="line-clamp-2 text-lg font-semibold text-gray-900 hover:text-red-600"
+                  >
+                    {video.title}
+                  </Link>
+
+                  <Link
+                    to={`/channel/${video.channelId}`}
+                    className="mt-2 block text-sm text-gray-600 hover:text-red-600"
+                  >
+                    {video.channelName}
+                  </Link>
+
+                  <p className="mt-1 text-sm text-gray-600">
+                    {video.views.toLocaleString()} views • {video.timestamp}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </main>
     </div>
   );
 };
 
-export default Home; 
+export default Home;
