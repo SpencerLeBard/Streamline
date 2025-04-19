@@ -22,7 +22,7 @@ const Navbar = () => {
           <span className="text-red-600 text-2xl font-bold whitespace-nowrap">VidStream</span>
         </Link>
 
-        {/* Search Bar - Centered and Longer */}
+        {/* Search Bar - Centered and Longer hello*/}
         <div className="flex-1 max-w-3xl mx-auto px-4">
           <form onSubmit={handleSearch} className="relative">
             <input
