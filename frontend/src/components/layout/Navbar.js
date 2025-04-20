@@ -14,38 +14,103 @@ const Navbar = () => {
     }
   };
 
+  // Simple CSS-in-JS styles to avoid any external CSS conflicts
+  const navbarStyle = {
+    backgroundColor: '#ffffff',
+    padding: '16px 24px',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+    position: 'sticky',
+    top: 0,
+    zIndex: 50,
+    width: '100%'
+  };
+
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    maxWidth: '1280px',
+    margin: '0 auto',
+    width: '100%'
+  };
+
+  const logoStyle = {
+    color: '#ff0000',
+    fontSize: '24px',
+    fontWeight: 'bold',
+    textDecoration: 'none'
+  };
+
+  const searchContainerStyle = {
+    width: '400px',
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)'
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '8px 16px 8px 16px',
+    paddingRight: '50px',
+    borderRadius: '20px',
+    border: '1px solid #e5e5e5',
+    outline: 'none'
+  };
+
+  const buttonStyle = {
+    position: 'absolute',
+    right: '0',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    height: '32px',
+    width: '32px',
+    borderRadius: '50%',
+    backgroundColor: '#f1f1f1',
+    border: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer'
+  };
+
+  const profileStyle = {
+    height: '40px',
+    width: '40px',
+    borderRadius: '50%',
+    backgroundColor: '#f1f1f1',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '14px'
+  };
+
   return (
-    <nav className="yt-bg-primary shadow-sm py-4 px-6 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <nav style={navbarStyle}>
+      <div style={containerStyle}>
         {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <span className="text-red-600 text-2xl font-bold whitespace-nowrap">VidStream</span>
+        <Link to="/" style={{textDecoration: 'none'}}>
+          <span style={logoStyle}>Streamline</span>
         </Link>
 
-        {/* Search Bar - Centered and Longer hello*/}
-        <div className="flex-1 max-w-3xl mx-auto px-4">
-          <form onSubmit={handleSearch} className="relative">
+        {/* Search Bar */}
+        <div style={searchContainerStyle}>
+          <form onSubmit={handleSearch} style={{position: 'relative'}}>
             <input
               type="text"
               placeholder="Search videos..."
-              className="w-full py-2 pl-5 pr-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              style={inputStyle}
             />
-            <button 
-              type="submit" 
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
-            >
-              <FaSearch className="text-gray-700" />
+            <button type="submit" style={buttonStyle}>
+              <FaSearch color="#606060" />
             </button>
           </form>
         </div>
 
-        {/* Right Side Navigation - Simplified */}
-        <div className="flex items-center">
-          <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-            <span className="text-gray-600 text-sm">👤</span>
-          </div>
+        {/* Profile */}
+        <div style={profileStyle}>
+          <span>👤</span>
         </div>
       </div>
     </nav>
