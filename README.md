@@ -32,38 +32,8 @@ A modern video streaming platform built with the MERN stack (MongoDB, Express, R
 - Node.js with Express
 - MongoDB with Mongoose
 - JWT for authentication
-- AWS S3 for video and image storage
+- AWS for video and image storage
 - Express Validator for request validation
-
-
-## Folder Structure
-
-```
-video-stream-project/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/     # Request handlers
-│   │   ├── models/          # Database models
-│   │   ├── routes/          # API routes
-│   │   ├── middleware/      # Custom middleware
-│   │   └── index.js         # Entry point
-│   ├── package.json
-│   └── .env                 # Environment variables (create this file)
-│
-├── frontend/
-│   ├── public/              # Static files
-│   ├── src/
-│   │   ├── components/      # Reusable components
-│   │   ├── pages/           # Page components
-│   │   ├── context/         # React context
-│   │   ├── services/        # API services
-│   │   ├── utils/           # Utility functions
-│   │   ├── App.js           # Main component
-│   │   └── index.js         # Entry point
-│   ├── package.json
-│   └── .env                 # Environment variables (create this file)
-│
-└── README.md
 
 
 ## License

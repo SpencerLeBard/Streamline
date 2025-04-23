@@ -13,10 +13,11 @@ import VideoPage from './pages/VideoPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ChannelPage from './pages/ChannelPage';
-import SearchResultsPage from './pages/SearchResultsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProfilePage from './pages/ProfilePage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import SearchPage from './pages/SearchPage';
+import ExplorePage from './pages/ExplorePage';
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -52,7 +53,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/video/:videoId" element={<VideoPage />} />
-            <Route path="/search" element={<SearchResultsPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/explore" element={<ExplorePage />} />
             <Route path="/channel/:channelId" element={<ChannelPage />} />
             
             <Route path="/login" element={<LoginPage />} />

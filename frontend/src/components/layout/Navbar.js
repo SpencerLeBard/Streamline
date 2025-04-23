@@ -205,6 +205,12 @@ const Navbar = () => {
     transform: showToast ? 'translateX(0)' : 'translateX(120%)'
   };
 
+  const actionsContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  };
+
   return (
     <nav style={navbarStyle}>
       <div style={containerStyle}>
@@ -230,8 +236,8 @@ const Navbar = () => {
         </div>
 
         {/* Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-          {/* For debugging - login toggle button */}
+        <div style={actionsContainerStyle}>
+          {/* Login Button - only show when not logged in */}
           {!isLoggedIn && (
             <button 
               style={loginButtonStyle}
@@ -241,15 +247,17 @@ const Navbar = () => {
             </button>
           )}
           
-          {/* Logout Button */}
-          <button 
-            style={logoutButtonStyle} 
-            onClick={handleLogout}
-            aria-label="Logout"
-          >
-            <FaSignOutAlt />
-            <span style={{ marginLeft: '5px' }}>Logout</span>
-          </button>
+          {/* Logout Button - only show when logged in */}
+          {isLoggedIn && (
+            <button 
+              style={logoutButtonStyle} 
+              onClick={handleLogout}
+              aria-label="Logout"
+            >
+              <FaSignOutAlt />
+              <span style={{ marginLeft: '5px' }}>Logout</span>
+            </button>
+          )}
           
           {/* Profile Icon */}
           <div 
