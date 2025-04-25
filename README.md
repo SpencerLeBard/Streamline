@@ -20,7 +20,7 @@ A modern video streaming platform built with the MERN stack (MongoDB, Express, R
 
 ## Tech Stack
 
-### Frontend
+### Client
 - React.js
 - React Router for navigation
 - Tailwind CSS for styling
@@ -28,7 +28,7 @@ A modern video streaming platform built with the MERN stack (MongoDB, Express, R
 - React Player for video playback
 - Context API for state management
 
-### Backend
+### Server
 - Node.js with Express
 - MongoDB with Mongoose
 - JWT for authentication
