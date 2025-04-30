@@ -6,32 +6,36 @@ const RegisterPage = () => {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await fetch('/auth/register', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ email, password, name }),
+  //     });
+  //     const data = await response.json();
+  //     if (data.success) {
+  //       console.log('Registration successful');
+  //     } else {
+  //       setError(data.message);
+  //     }
+  //   } catch (err) {
+  //     setError('An error occurred. Please try again.');
+  //   }
+  // };
+  // Temporary mock registration for frontend-only deployment
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch('/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, name }),
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        console.log('Registration successful');
-      } else {
-        setError(data.message);
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    }
+    console.log('Registration successful');
   };
 
   return (
     <div>
       <h2>Register</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"

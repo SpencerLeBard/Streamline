@@ -36,37 +36,45 @@ const Navbar = () => {
     setShowLoginForm(!showLoginForm);
   };
 
-  const handleLoginSubmit = async (e) => {
+  // const handleLoginSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     console.log('Attempting to login with:', { email, password });
+  //     const response = await fetch('http://localhost:5002/auth/login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+  //     const data = await response.json();
+  //     console.log('Login response:', data);
+  //     if (data.success) {
+  //       localStorage.setItem('token', data.token);
+  //       localStorage.setItem('user', JSON.stringify(data.user));
+  //       login();
+  //       setShowLoginForm(false);
+  //       setEmail('');
+  //       setPassword('');
+  //       setError('');
+  //       setShowToast(true);
+  //     } else {
+  //       setError(data.message);
+  //     }
+  //   } catch (err) {
+  //     console.error('Login error:', err);
+  //     setError('An error occurred. Please try again.');
+  //   }
+  // };
+  // Temporary mock login for frontend-only deployment
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
-    try {
-      console.log('Attempting to login with:', { email, password });
-      const response = await fetch('http://localhost:5002/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-      console.log('Login response:', data);
-      
-      if (data.success) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        login();
-        setShowLoginForm(false);
-        setEmail('');
-        setPassword('');
-        setError('');
-        setShowToast(true);
-      } else {
-        setError(data.message);
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('An error occurred. Please try again.');
-    }
+    login();
+    setShowLoginForm(false);
+    setEmail('');
+    setPassword('');
+    setError('');
+    setShowToast(true);
   };
 
   const handleLogout = () => {
@@ -279,7 +287,7 @@ const Navbar = () => {
       {!isLoggedIn && showLoginForm && (
         <div style={loginFormStyle}>
           <h3 style={{ marginBottom: '15px' }}>Login</h3>
-          {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+          {/* {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>} */}
           <form onSubmit={handleLoginSubmit}>
             <input
               type="email"

@@ -7,33 +7,37 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await fetch('/auth/login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+  //     const data = await response.json();
+  //     if (data.success) {
+  //       localStorage.setItem('token', data.token);
+  //       login();
+  //     } else {
+  //       setError(data.message);
+  //     }
+  //   } catch (err) {
+  //     setError('An error occurred. Please try again.');
+  //   }
+  // };
+  // Temporary mock login for frontend-only deployment
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch('/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        localStorage.setItem('token', data.token);
-        login();
-      } else {
-        setError(data.message);
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    }
+    login();
   };
 
   return (
     <div>
       <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
       <form onSubmit={handleSubmit}>
         <input
           type="email"
