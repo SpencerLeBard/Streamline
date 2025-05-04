@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useResponsive } from '../utils/responsive';
 
 const VideoPage = () => {
   const { videoId } = useParams();
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [relatedVideos, setRelatedVideos] = useState([]);
+  const { isMobile, isTablet } = useResponsive();
   
   useEffect(() => {
     // Simulate API call
@@ -69,53 +71,214 @@ const VideoPage = () => {
     }, 800);
   }, [videoId]);
 
+  // Styles
+  const pageContainerStyle = {
+    display: 'grid',
+    gridTemplateColumns: isMobile || isTablet ? '1fr' : '2fr 1fr',
+    gap: isMobile ? '16px' : '24px',
+    width: '100%',
+    maxWidth: '1280px',
+    margin: '0 auto'
+  };
+
+  const videoColumnStyle = {
+    width: '100%'
+  };
+
+  const videoPlayerStyle = {
+    position: 'relative',
+    paddingTop: '56.25%', // 16:9 aspect ratio
+    backgroundColor: '#000',
+    borderRadius: '8px',
+    overflow: 'hidden'
+  };
+
+  const iframeStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    border: 'none'
+  };
+
+  const videoInfoStyle = {
+    marginTop: '16px'
+  };
+
+  const videoTitleStyle = {
+    fontSize: isMobile ? '18px' : '24px',
+    fontWeight: 'bold',
+    color: '#0f0f0f',
+    marginBottom: '8px'
+  };
+
+  const videoMetaStyle = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: '8px',
+    fontSize: '14px',
+    color: '#606060'
+  };
+
+  const actionButtonsStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+    marginTop: isMobile ? '8px' : '0'
+  };
+
+  const channelInfoStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '16px',
+    paddingBottom: '16px',
+    borderBottom: '1px solid #e5e5e5'
+  };
+
+  const channelAvatarStyle = {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%'
+  };
+
+  const channelTextStyle = {
+    marginLeft: '12px'
+  };
+
+  const channelNameStyle = {
+    fontWeight: '500',
+    color: '#0f0f0f',
+    textDecoration: 'none'
+  };
+
+  const subscriberCountStyle = {
+    fontSize: '14px',
+    color: '#606060'
+  };
+
+  const descriptionStyle = {
+    marginTop: '16px',
+    padding: '16px',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '8px',
+    color: '#0f0f0f',
+    whiteSpace: 'pre-line'
+  };
+
+  const relatedVideosStyle = {
+    marginTop: isMobile ? '24px' : '0'
+  };
+
+  const relatedTitleStyle = {
+    fontSize: '18px',
+    fontWeight: '500',
+    marginBottom: '16px',
+    color: '#0f0f0f'
+  };
+
+  const relatedItemStyle = {
+    display: 'flex',
+    gap: '8px',
+    marginBottom: '16px'
+  };
+
+  const relatedThumbnailStyle = {
+    width: isMobile ? '120px' : '160px',
+    height: isMobile ? '68px' : '90px',
+    objectFit: 'cover',
+    borderRadius: '8px',
+    flexShrink: 0
+  };
+
+  const relatedVideoTitleStyle = {
+    fontWeight: '500',
+    fontSize: '14px',
+    color: '#0f0f0f',
+    textDecoration: 'none',
+    display: '-webkit-box',
+    WebkitLineClamp: '2',
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden'
+  };
+
+  const relatedChannelStyle = {
+    fontSize: '13px',
+    color: '#606060',
+    textDecoration: 'none'
+  };
+
+  const relatedMetaStyle = {
+    fontSize: '12px',
+    color: '#606060'
+  };
+
   if (loading) {
-    return <div className="text-center p-8 yt-text-primary">Loading video...</div>;
+    return (
+      <div style={{ 
+        textAlign: 'center', 
+        padding: '32px',
+        color: '#0f0f0f',
+        fontSize: '16px'
+      }}>
+        Loading video...
+      </div>
+    );
   }
 
   if (!video) {
-    return <div className="text-center text-red-500 mt-10">Video not found</div>;
+    return (
+      <div style={{ 
+        textAlign: 'center', 
+        color: '#ff0000',
+        marginTop: '40px',
+        fontSize: '16px'
+      }}>
+        Video not found
+      </div>
+    );
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-2">
+    <div style={pageContainerStyle}>
+      <div style={videoColumnStyle}>
         {/* Video Player */}
-        <div className="relative pt-[56.25%] bg-black rounded-lg overflow-hidden">
+        <div style={videoPlayerStyle}>
           <iframe
             src={`https://www.youtube.com/embed/dQw4w9WgXcQ`}
-            className="absolute top-0 left-0 w-full h-full"
+            style={iframeStyle}
             title={video.title}
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
         </div>
 
         {/* Video Information */}
-        <div className="mt-4">
-          <h1 className="text-xl md:text-2xl font-bold yt-text-primary">
+        <div style={videoInfoStyle}>
+          <h1 style={videoTitleStyle}>
             {video.title}
           </h1>
           
-          <div className="flex flex-wrap items-center justify-between mt-2 text-sm yt-text-secondary">
+          <div style={videoMetaStyle}>
             <div>
               <span>{video.views.toLocaleString()} views</span>
-              <span className="mx-2">•</span>
+              <span style={{ margin: '0 8px' }}>•</span>
               <span>{new Date(video.createdAt).toLocaleDateString()}</span>
             </div>
             
-            <div className="flex items-center space-x-4 mt-2 sm:mt-0">
-              <button className="flex items-center space-x-1">
+            <div style={actionButtonsStyle}>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span>👍</span>
                 <span>{video.likes.toLocaleString()}</span>
               </button>
               
-              <button className="flex items-center space-x-1">
+              <button style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span>👎</span>
               </button>
               
-              <button className="flex items-center space-x-1">
+              <button style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span>🔗 Share</span>
               </button>
             </div>
@@ -123,57 +286,59 @@ const VideoPage = () => {
         </div>
 
         {/* Channel Info */}
-        <div className="flex items-center mt-4 pb-4 border-b yt-border">
+        <div style={channelInfoStyle}>
           <img 
             src={video.channelAvatar} 
             alt={video.channelName}
-            className="w-10 h-10 rounded-full"
+            style={channelAvatarStyle}
           />
-          <div className="ml-3">
-            <Link to={`/channel/${video.channelId}`} className="font-medium yt-text-primary hover:text-red-600">
+          <div style={channelTextStyle}>
+            <Link to={`/channel/${video.channelId}`} style={channelNameStyle}>
               {video.channelName}
             </Link>
-            <p className="text-sm yt-text-secondary">{video.subscribers.toLocaleString()} subscribers</p>
+            <p style={subscriberCountStyle}>{video.subscribers.toLocaleString()} subscribers</p>
           </div>
         </div>
 
         {/* Video Description */}
-        <div className="mt-4 p-4 yt-bg-primary rounded-lg">
-          <p className="yt-text-primary whitespace-pre-line">
+        <div style={descriptionStyle}>
+          <p>
             {video.description}
           </p>
         </div>
       </div>
 
       {/* Related Videos */}
-      <div className="lg:col-span-1">
-        <h3 className="font-medium text-lg mb-4 yt-text-primary">Related Videos</h3>
-        <div className="space-y-4">
+      <div style={relatedVideosStyle}>
+        <h3 style={relatedTitleStyle}>Related Videos</h3>
+        <div>
           {relatedVideos.map(relatedVideo => (
-            <div key={relatedVideo.id} className="flex space-x-2">
-              <Link to={`/video/${relatedVideo.id}`} className="flex-shrink-0">
+            <div key={relatedVideo.id} style={relatedItemStyle}>
+              <Link to={`/video/${relatedVideo.id}`}>
                 <img 
                   src={relatedVideo.thumbnail} 
                   alt={relatedVideo.title} 
-                  className="w-40 h-24 object-cover rounded-lg"
+                  style={relatedThumbnailStyle}
                 />
               </Link>
               <div>
                 <Link 
                   to={`/video/${relatedVideo.id}`} 
-                  className="font-medium yt-text-primary hover:text-red-600 line-clamp-2"
+                  style={relatedVideoTitleStyle}
                 >
                   {relatedVideo.title}
                 </Link>
-                <Link 
-                  to={`/channel/${relatedVideo.channelId}`} 
-                  className="text-sm yt-text-secondary hover:text-red-600"
-                >
-                  {relatedVideo.channelName}
-                </Link>
-                <p className="text-xs yt-text-secondary">
-                  {relatedVideo.views.toLocaleString()} views • {relatedVideo.timestamp}
-                </p>
+                <div>
+                  <Link 
+                    to={`/channel/${relatedVideo.channelId}`} 
+                    style={relatedChannelStyle}
+                  >
+                    {relatedVideo.channelName}
+                  </Link>
+                  <p style={relatedMetaStyle}>
+                    {relatedVideo.views.toLocaleString()} views • {relatedVideo.timestamp}
+                  </p>
+                </div>
               </div>
             </div>
           ))}

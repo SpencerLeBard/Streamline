@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaSearch, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { FaSearch, FaUser, FaSignOutAlt, FaBars, FaTimes, FaHome } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
+import { useResponsive } from '../../utils/responsive';
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,7 +11,10 @@ const Navbar = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showToast, setShowToast] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const { isLoggedIn, login, logout } = useAuth();
+  const { isMobile, isTablet } = useResponsive();
   const navigate = useNavigate();
 
   // Hide toast after 3 seconds
@@ -28,45 +32,16 @@ const Navbar = () => {
     if (searchTerm.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
       setSearchTerm('');
+      setMobileSearchOpen(false);
     }
   };
 
   const toggleLoginForm = () => {
     console.log("Toggle login form called, current state:", showLoginForm);
     setShowLoginForm(!showLoginForm);
+    setMobileMenuOpen(false);
   };
 
-  // const handleLoginSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     console.log('Attempting to login with:', { email, password });
-  //     const response = await fetch('http://localhost:5002/auth/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ email, password }),
-  //     });
-  //     const data = await response.json();
-  //     console.log('Login response:', data);
-  //     if (data.success) {
-  //       localStorage.setItem('token', data.token);
-  //       localStorage.setItem('user', JSON.stringify(data.user));
-  //       login();
-  //       setShowLoginForm(false);
-  //       setEmail('');
-  //       setPassword('');
-  //       setError('');
-  //       setShowToast(true);
-  //     } else {
-  //       setError(data.message);
-  //     }
-  //   } catch (err) {
-  //     console.error('Login error:', err);
-  //     setError('An error occurred. Please try again.');
-  //   }
-  // };
-  // Temporary mock login for frontend-only deployment
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     login();
@@ -82,12 +57,23 @@ const Navbar = () => {
     localStorage.removeItem('user');
     logout();
     setShowToast(false);
+    setMobileMenuOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+    if (showLoginForm) setShowLoginForm(false);
+  };
+
+  const toggleMobileSearch = () => {
+    setMobileSearchOpen(!mobileSearchOpen);
+    setMobileMenuOpen(false);
   };
 
   // Styles
   const navbarStyle = {
     backgroundColor: '#ffffff',
-    padding: '16px 24px',
+    padding: '12px 16px',
     boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
     position: 'sticky',
     top: 0,
@@ -115,7 +101,20 @@ const Navbar = () => {
     width: '400px',
     position: 'absolute',
     left: '50%',
-    transform: 'translateX(-50%)'
+    transform: 'translateX(-50%)',
+    display: 'block'
+  };
+
+  const mobileSearchContainerStyle = {
+    width: '100%',
+    padding: '10px 16px',
+    backgroundColor: '#fff',
+    position: 'absolute',
+    top: '60px',
+    left: 0,
+    zIndex: 1000,
+    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+    display: mobileSearchOpen ? 'block' : 'none'
   };
 
   const inputStyle = {
@@ -219,130 +218,292 @@ const Navbar = () => {
     gap: '8px'
   };
 
+  const mobileMenuButtonStyle = {
+    display: isMobile ? 'block' : 'none',
+    background: 'none',
+    border: 'none',
+    fontSize: '24px',
+    cursor: 'pointer',
+    color: '#606060'
+  };
+
+  const mobileSearchButtonStyle = {
+    display: isMobile ? 'block' : 'none',
+    background: 'none',
+    border: 'none',
+    fontSize: '20px',
+    cursor: 'pointer',
+    color: '#606060',
+    marginRight: '10px'
+  };
+
+  const mobileMenuStyle = {
+    display: mobileMenuOpen ? 'flex' : 'none',
+    position: 'fixed',
+    top: '60px',
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    flexDirection: 'column',
+    padding: '16px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    zIndex: 999
+  };
+
+  const mobileMenuItemStyle = {
+    padding: '12px 16px',
+    borderBottom: '1px solid #eee',
+    width: '100%',
+    textAlign: 'left',
+    fontSize: '16px',
+    background: 'none',
+    border: 'none',
+    color: '#333',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px'
+  };
+
+  // Media queries styles as inline object-based
+  const mediaStyles = `
+    @media (max-width: 768px) {
+      .desktop-search {
+        display: none !important;
+      }
+      .mobile-actions {
+        display: flex !important;
+      }
+      .desktop-actions {
+        display: none !important;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .mobile-actions {
+        display: none !important;
+      }
+    }
+  `;
+
   return (
-    <nav style={navbarStyle}>
-      <div style={containerStyle}>
-        {/* Logo */}
-        <Link to="/" style={{textDecoration: 'none'}}>
-          <span style={logoStyle}>Streamline</span>
-        </Link>
+    <>
+      <style>{mediaStyles}</style>
+      <nav style={navbarStyle}>
+        <div style={containerStyle}>
+          {/* Logo */}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {isMobile && (
+              <button 
+                onClick={toggleMobileMenu}
+                style={mobileMenuButtonStyle}
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+              </button>
+            )}
+            
+            <Link to={isMobile ? "/explore" : "/home"} style={{textDecoration: 'none'}}>
+              <span style={logoStyle}>Streamline</span>
+            </Link>
+          </div>
 
-        {/* Search Bar */}
-        <div style={searchContainerStyle}>
-          <form onSubmit={handleSearch} style={{position: 'relative'}}>
-            <input
-              type="text"
-              placeholder="Search videos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={inputStyle}
-            />
-            <button type="submit" style={buttonStyle}>
-              <FaSearch color="#606060" />
-            </button>
-          </form>
-        </div>
+          {/* Desktop Search Bar */}
+          {!isMobile && (
+            <div style={searchContainerStyle} className="desktop-search">
+              <form onSubmit={handleSearch} style={{position: 'relative'}}>
+                <input
+                  type="text"
+                  placeholder="Search videos..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  style={inputStyle}
+                />
+                <button type="submit" style={buttonStyle}>
+                  <FaSearch color="#606060" />
+                </button>
+              </form>
+            </div>
+          )}
 
-        {/* Actions */}
-        <div style={actionsContainerStyle}>
-          {/* Login Button - only show when not logged in */}
-          {!isLoggedIn && (
-            <button 
-              style={loginButtonStyle}
-              onClick={toggleLoginForm}
+          {/* Desktop Actions */}
+          <div style={actionsContainerStyle} className="desktop-actions">
+            {/* Login Button - only show when not logged in */}
+            {!isLoggedIn && (
+              <button 
+                style={loginButtonStyle}
+                onClick={toggleLoginForm}
+              >
+                Login
+              </button>
+            )}
+            
+            {/* Logout Button - only show when logged in */}
+            {isLoggedIn && (
+              <button 
+                style={logoutButtonStyle} 
+                onClick={handleLogout}
+                aria-label="Logout"
+              >
+                <FaSignOutAlt />
+                <span style={{ marginLeft: '5px' }}>Logout</span>
+              </button>
+            )}
+            
+            {/* Profile Icon */}
+            <div 
+              style={profileStyle} 
+              onClick={() => {
+                if (isLoggedIn) {
+                  navigate('/profile');
+                } else {
+                  toggleLoginForm();
+                }
+              }}
             >
-              Login
-            </button>
-          )}
-          
-          {/* Logout Button - only show when logged in */}
-          {isLoggedIn && (
+              <FaUser />
+            </div>
+          </div>
+
+          {/* Mobile Actions */}
+          <div style={{ display: 'none' }} className="mobile-actions">
             <button 
-              style={logoutButtonStyle} 
-              onClick={handleLogout}
-              aria-label="Logout"
+              onClick={toggleMobileSearch}
+              style={mobileSearchButtonStyle}
+              aria-label="Search"
             >
-              <FaSignOutAlt />
-              <span style={{ marginLeft: '5px' }}>Logout</span>
+              <FaSearch />
             </button>
-          )}
-          
-          {/* Profile Icon */}
-          <div 
-            style={profileStyle} 
-            onClick={() => {
-              if (isLoggedIn) {
-                navigate('/profile');
-              } else {
-                toggleLoginForm();
-              }
-            }}
-          >
-            <FaUser />
+            
+            <div 
+              style={profileStyle}
+              onClick={() => {
+                if (isLoggedIn) {
+                  navigate('/profile');
+                } else {
+                  toggleLoginForm();
+                }
+              }}
+            >
+              <FaUser />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Login Form */}
-      {!isLoggedIn && showLoginForm && (
-        <div style={loginFormStyle}>
-          <h3 style={{ marginBottom: '15px' }}>Login</h3>
-          {/* {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>} */}
-          <form onSubmit={handleLoginSubmit}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              required
-              style={{ 
-                marginBottom: '10px', 
-                width: '100%', 
-                padding: '8px',
-                borderRadius: '4px',
-                border: '1px solid #e5e5e5'
-              }}
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              required
-              style={{ 
-                marginBottom: '15px', 
-                width: '100%', 
-                padding: '8px',
-                borderRadius: '4px',
-                border: '1px solid #e5e5e5'
-              }}
-            />
-            <button 
-              type="submit" 
-              style={{ 
-                width: '100%', 
-                padding: '10px', 
-                backgroundColor: '#ff0000', 
-                color: '#fff', 
-                border: 'none', 
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontWeight: '500'
-              }}
-            >
+        {/* Mobile Search */}
+        {isMobile && mobileSearchOpen && (
+          <div style={mobileSearchContainerStyle}>
+            <form onSubmit={handleSearch} style={{position: 'relative'}}>
+              <input
+                type="text"
+                placeholder="Search videos..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={inputStyle}
+                autoFocus
+              />
+              <button type="submit" style={buttonStyle}>
+                <FaSearch color="#606060" />
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* Mobile Menu */}
+        <div style={mobileMenuStyle}>
+          <Link to="/home" style={{ textDecoration: 'none', width: '100%' }}>
+            <button style={mobileMenuItemStyle} onClick={toggleMobileMenu}>
+              <FaHome />
+              Home
+            </button>
+          </Link>
+          <Link to="/explore" style={{ textDecoration: 'none', width: '100%' }}>
+            <button style={mobileMenuItemStyle} onClick={toggleMobileMenu}>
+              <FaSearch />
+              Explore
+            </button>
+          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/profile" style={{ textDecoration: 'none', width: '100%' }}>
+                <button style={mobileMenuItemStyle} onClick={toggleMobileMenu}>
+                  <FaUser />
+                  Profile
+                </button>
+              </Link>
+              <button style={mobileMenuItemStyle} onClick={handleLogout}>
+                <FaSignOutAlt />
+                Logout
+              </button>
+            </>
+          ) : (
+            <button style={mobileMenuItemStyle} onClick={toggleLoginForm}>
+              <FaUser />
               Login
             </button>
-          </form>
+          )}
         </div>
-      )}
 
-      {/* Success Toast */}
-      {showToast && (
-        <div style={toastStyle}>
-          Login Success! Welcome back.
-        </div>
-      )}
-    </nav>
+        {/* Login Form */}
+        {!isLoggedIn && showLoginForm && (
+          <div style={loginFormStyle}>
+            <h3 style={{ marginBottom: '15px' }}>Login</h3>
+            <form onSubmit={handleLoginSubmit}>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                required
+                style={{ 
+                  marginBottom: '10px', 
+                  width: '100%', 
+                  padding: '8px',
+                  borderRadius: '4px',
+                  border: '1px solid #e5e5e5'
+                }}
+              />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+                style={{ 
+                  marginBottom: '15px', 
+                  width: '100%', 
+                  padding: '8px',
+                  borderRadius: '4px',
+                  border: '1px solid #e5e5e5'
+                }}
+              />
+              <button 
+                type="submit" 
+                style={{ 
+                  width: '100%', 
+                  padding: '10px', 
+                  backgroundColor: '#ff0000', 
+                  color: '#fff', 
+                  border: 'none', 
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: '500'
+                }}
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* Success Toast */}
+        {showToast && (
+          <div style={toastStyle}>
+            Login Success! Welcome back.
+          </div>
+        )}
+      </nav>
+    </>
   );
 };
 
