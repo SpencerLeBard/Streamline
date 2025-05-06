@@ -119,7 +119,8 @@ const ExplorePage = () => {
   const thumbnailContainerStyle = {
     position: 'relative',
     overflow: 'hidden',
-    borderRadius: '16px 16px 0 0'
+    borderRadius: '16px 16px 0 0',
+    backgroundColor: '#e0e7ff'
   };
 
   const thumbnailStyle = {
@@ -222,7 +223,7 @@ const ExplorePage = () => {
                   <div style={thumbnailContainerStyle}>
                     <img
                       src={video.thumbnail}
-                      alt={video.title}
+                      alt=""
                       style={thumbnailStyle}
                     />
                     <div style={categoryTagStyle(selectedCategory)}>

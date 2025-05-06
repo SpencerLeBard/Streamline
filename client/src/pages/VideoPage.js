@@ -190,7 +190,8 @@ const VideoPage = () => {
     height: isMobile ? '68px' : '90px',
     objectFit: 'cover',
     borderRadius: '8px',
-    flexShrink: 0
+    flexShrink: 0,
+    backgroundColor: '#e0e7ff'
   };
 
   const relatedVideoTitleStyle = {
@@ -289,7 +290,7 @@ const VideoPage = () => {
         <div style={channelInfoStyle}>
           <img 
             src={video.channelAvatar} 
-            alt={video.channelName}
+            alt="" 
             style={channelAvatarStyle}
           />
           <div style={channelTextStyle}>
@@ -317,7 +318,7 @@ const VideoPage = () => {
               <Link to={`/video/${relatedVideo.id}`}>
                 <img 
                   src={relatedVideo.thumbnail} 
-                  alt={relatedVideo.title} 
+                  alt="" 
                   style={relatedThumbnailStyle}
                 />
               </Link>

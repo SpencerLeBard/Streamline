@@ -26,7 +26,7 @@ const VideoCard = ({ video }) => {
       <Link to={`/video/${_id}`} className="block relative">
         <img 
           src={thumbnailUrl} 
-          alt={title} 
+          alt="" 
           className="w-full h-48 object-cover"
         />
         {duration && (

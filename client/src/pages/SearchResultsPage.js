@@ -66,7 +66,12 @@ const SearchResultsPage = () => {
           {results.map(video => (
             <div key={video.id} className="flex yt-bg-primary rounded-lg overflow-hidden shadow">
               <Link to={`/video/${video.id}`} className="flex-shrink-0">
-                <img src={video.thumbnail} alt={video.title} className="w-40 h-24 object-cover" />
+                <img 
+                  src={video.thumbnail} 
+                  alt="" 
+                  className="w-40 h-24 object-cover" 
+                  style={{ backgroundColor: '#e0e7ff' }} 
+                />
               </Link>
               <div className="p-4">
                 <Link to={`/video/${video.id}`} className="text-lg font-semibold yt-text-primary hover:text-red-600">

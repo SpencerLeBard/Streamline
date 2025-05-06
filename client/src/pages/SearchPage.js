@@ -152,7 +152,8 @@ const SearchPage = () => {
     width: '240px',
     height: '135px',
     objectFit: 'cover',
-    borderRadius: '8px'
+    borderRadius: '8px',
+    backgroundColor: '#e0e7ff'
   };
 
   const infoContainerStyle = {
@@ -246,7 +247,7 @@ const SearchPage = () => {
                 <Link to={`/video/${result.id}`}>
                   <img 
                     src={result.thumbnail} 
-                    alt={result.title} 
+                    alt="" 
                     style={thumbnailStyle}
                   />
                 </Link>

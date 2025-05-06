@@ -90,11 +90,11 @@ const Home = () => {
   const categoryButtonStyle = (isSelected) => ({
     padding: '8px 16px',
     margin: '0 8px 0 0',
-    borderRadius: '20px',
+    borderRadius: '4px',
     border: 'none',
     cursor: 'pointer',
     whiteSpace: 'nowrap',
-    backgroundColor: isSelected ? '#ff0000' : '#f1f1f1',
+    backgroundColor: isSelected ? '#6366f1' : '#f1f1f1',
     color: isSelected ? '#ffffff' : '#606060',
     fontWeight: isSelected ? '500' : 'normal',
     transition: 'background-color 0.2s, color 0.2s'
@@ -123,7 +123,8 @@ const Home = () => {
     width: '100%',
     height: isMobileView ? '200px' : '180px',
     objectFit: 'cover',
-    display: 'block'
+    display: 'block',
+    backgroundColor: '#e0e7ff'
   };
 
   const videoInfoStyle = {
@@ -315,19 +316,6 @@ const Home = () => {
       <div style={pageStyle}>
         {/* Main content */}
         <div style={mainContentStyle}>
-          {/* Category selection */}
-          <div style={categoryBarStyle} className="hide-scrollbar">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => handleCategoryChange(category)}
-                style={categoryButtonStyle(selectedCategory === category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
           {/* Video grid */}
           {videos.length === 0 ? (
             <div style={emptyStateStyle}>
@@ -340,7 +328,7 @@ const Home = () => {
                   <Link to={`/video/${video.id}`} style={linkStyle}>
                     <img
                       src={video.thumbnail}
-                      alt={video.title}
+                      alt=""
                       style={thumbnailStyle}
                     />
                     <div style={videoInfoStyle}>
