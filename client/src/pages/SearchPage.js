@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FaSearch, FaEye, FaThumbsUp, FaClock } from 'react-icons/fa';
+import { useResponsive } from '../utils/responsive';
 
 const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { isMobile } = useResponsive();
 
   useEffect(() => {
     const query = searchParams.get('q');
@@ -94,7 +96,7 @@ const SearchPage = () => {
   };
 
   const mainContentStyle = {
-    padding: '20px 40px',
+    padding: isMobile ? '16px' : '20px 40px',
     maxWidth: '1280px',
     margin: '0 auto',
     width: '100%'
@@ -141,16 +143,25 @@ const SearchPage = () => {
 
   const resultCardStyle = {
     display: 'flex',
-    padding: '16px',
+    flexDirection: isMobile ? 'column' : 'row',
+    padding: isMobile ? '0' : '16px',
     borderRadius: '12px',
     backgroundColor: '#fff',
     boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-    gap: '20px'
+    gap: isMobile ? '0' : '20px',
+    overflow: 'hidden'
+  };
+
+  const thumbnailContainerStyle = {
+    width: '100%',
+    backgroundColor: '#e0e7ff',
+    padding: isMobile ? '16px' : '0',
+    display: isMobile ? 'block' : 'none',
   };
 
   const thumbnailStyle = {
-    width: '240px',
-    height: '135px',
+    width: isMobile ? '100%' : '240px',
+    height: isMobile ? 'auto' : '135px',
     objectFit: 'cover',
     borderRadius: '8px',
     backgroundColor: '#e0e7ff'
@@ -159,11 +170,13 @@ const SearchPage = () => {
   const infoContainerStyle = {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: isMobile ? '16px' : '0',
+    backgroundColor: '#fff'
   };
 
   const titleStyle = {
-    fontSize: '18px',
+    fontSize: isMobile ? '16px' : '18px',
     fontWeight: '500',
     color: '#0f0f0f',
     marginBottom: '8px',
@@ -185,15 +198,17 @@ const SearchPage = () => {
 
   const statsStyle = {
     display: 'flex',
+    flexWrap: 'wrap',
     fontSize: '13px',
     color: '#606060',
-    gap: '16px'
+    gap: '8px'
   };
 
   const statItemStyle = {
     display: 'flex',
     alignItems: 'center',
-    gap: '4px'
+    gap: '4px',
+    marginRight: '8px'
   };
 
   const loadingStyle = {
@@ -244,13 +259,27 @@ const SearchPage = () => {
           <div style={resultsContainerStyle}>
             {searchResults.map((result) => (
               <div key={result.id} style={resultCardStyle}>
-                <Link to={`/video/${result.id}`}>
-                  <img 
-                    src={result.thumbnail} 
-                    alt="" 
-                    style={thumbnailStyle}
-                  />
-                </Link>
+                {isMobile ? (
+                  <Link to={`/video/${result.id}`} style={{ 
+                    width: '100%',
+                    display: 'block',
+                    ...thumbnailContainerStyle
+                  }}>
+                    <img 
+                      src={result.thumbnail} 
+                      alt="" 
+                      style={thumbnailStyle}
+                    />
+                  </Link>
+                ) : (
+                  <Link to={`/video/${result.id}`} style={{ width: 'auto' }}>
+                    <img 
+                      src={result.thumbnail} 
+                      alt="" 
+                      style={thumbnailStyle}
+                    />
+                  </Link>
+                )}
                 <div style={infoContainerStyle}>
                   <Link to={`/video/${result.id}`} style={{ textDecoration: 'none' }}>
                     <h3 style={titleStyle}>{result.title}</h3>

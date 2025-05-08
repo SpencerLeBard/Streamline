@@ -224,7 +224,11 @@ const Navbar = () => {
     border: 'none',
     fontSize: '24px',
     cursor: 'pointer',
-    color: '#606060'
+    color: '#606060',
+    padding: 0,
+    display: 'flex',
+    alignItems: 'center',
+    height: '24px'
   };
 
   const mobileSearchButtonStyle = {
@@ -292,7 +296,7 @@ const Navbar = () => {
       <nav style={navbarStyle}>
         <div style={containerStyle}>
           {/* Logo */}
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', height: '24px' }}>
             {isMobile && (
               <button 
                 onClick={toggleMobileMenu}
@@ -303,7 +307,7 @@ const Navbar = () => {
               </button>
             )}
             
-            <Link to={isMobile ? "/explore" : "/home"} style={{textDecoration: 'none'}}>
+            <Link to={isMobile ? "/explore" : "/home"} style={{textDecoration: 'none', marginLeft: isMobile ? '20px' : '0', display: 'flex', alignItems: 'center'}}>
               <span style={logoStyle}>Streamline</span>
             </Link>
           </div>

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaSearch, FaCompass, FaHistory, FaThumbsUp, FaYoutube, FaUserCircle, FaBars } from 'react-icons/fa';
+import { 
+  FaMusic, FaGamepad, FaLaptopCode, FaRunning, FaGraduationCap, 
+  FaTshirt, FaPlane, FaUtensils, FaFlask, FaPalette,
+  FaLaughSquint, FaFilm, FaTools, FaDumbbell, FaDog
+} from 'react-icons/fa';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -191,23 +196,23 @@ const Sidebar = () => {
     margin: '16px 0'
   };
 
-  // Fake channel data - Adding more channels to test scrolling
-  const channels = [
-    { id: 1, name: 'Tech Simplified', image: '💻' },
-    { id: 2, name: 'Gaming Zone', image: '🎮' },
-    { id: 3, name: 'Music Universe', image: '🎵' },
-    { id: 4, name: 'Cooking Masters', image: '🍳' },
-    { id: 5, name: 'Travel Explorers', image: '✈️' },
-    { id: 6, name: 'Fitness First', image: '💪' },
-    { id: 7, name: 'Science Lab', image: '🔬' },
-    { id: 8, name: 'Art Studio', image: '🎨' }
-  ];
-
   // Categories - Adding more to test scrolling
   const categories = [
-    'Music', 'Gaming', 'Technology', 'Sports', 'Education', 
-    'Fashion', 'Travel', 'Cooking', 'Science', 'Art', 
-    'Comedy', 'Movies', 'DIY', 'Fitness', 'Pets'
+    { name: 'Music', icon: <FaMusic /> },
+    { name: 'Gaming', icon: <FaGamepad /> }, 
+    { name: 'Technology', icon: <FaLaptopCode /> }, 
+    { name: 'Sports', icon: <FaRunning /> }, 
+    { name: 'Education', icon: <FaGraduationCap /> },
+    { name: 'Fashion', icon: <FaTshirt /> }, 
+    { name: 'Travel', icon: <FaPlane /> }, 
+    { name: 'Cooking', icon: <FaUtensils /> }, 
+    { name: 'Science', icon: <FaFlask /> }, 
+    { name: 'Art', icon: <FaPalette /> },
+    { name: 'Comedy', icon: <FaLaughSquint /> }, 
+    { name: 'Movies', icon: <FaFilm /> }, 
+    { name: 'DIY', icon: <FaTools /> }, 
+    { name: 'Fitness', icon: <FaDumbbell /> }, 
+    { name: 'Pets', icon: <FaDog /> }
   ];
 
   const renderSidebarContent = () => (
@@ -246,30 +251,15 @@ const Sidebar = () => {
         <>
           <div style={dividerStyle}></div>
           
-          {/* Subscriptions */}
-          <div style={sectionStyle}>
-            <h3 style={sectionTitleStyle}>SUBSCRIPTIONS</h3>
-            {channels.map(channel => (
-              <Link key={channel.id} to={`/channel/${channel.id}`} style={channelItemStyle}>
-                <div style={channelImageStyle}>
-                  <span>{channel.image}</span>
-                </div>
-                <span style={textStyle}>{channel.name}</span>
-              </Link>
-            ))}
-          </div>
-          
-          <div style={dividerStyle}></div>
-          
           {/* Categories */}
           <div style={sectionStyle}>
             <h3 style={sectionTitleStyle}>CATEGORIES</h3>
             {categories.map((category, index) => (
-              <Link key={index} to={`/category/${category.toLowerCase()}`} style={channelItemStyle}>
+              <Link key={index} to={`/category/${category.name.toLowerCase()}`} style={channelItemStyle}>
                 <div style={channelImageStyle}>
-                  <FaYoutube />
+                  {category.icon}
                 </div>
-                <span style={textStyle}>{category}</span>
+                <span style={textStyle}>{category.name}</span>
               </Link>
             ))}
           </div>

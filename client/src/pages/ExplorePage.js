@@ -133,18 +133,6 @@ const ExplorePage = () => {
     }
   };
 
-  const categoryTagStyle = (category) => ({
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    padding: '4px 12px',
-    borderRadius: '20px',
-    backgroundColor: getCategoryColor(category),
-    color: '#fff',
-    fontSize: '12px',
-    fontWeight: 'bold'
-  });
-
   const videoInfoStyle = {
     padding: '16px'
   };
@@ -226,9 +214,6 @@ const ExplorePage = () => {
                       alt=""
                       style={thumbnailStyle}
                     />
-                    <div style={categoryTagStyle(selectedCategory)}>
-                      {selectedCategory}
-                    </div>
                   </div>
                   <div style={videoInfoStyle}>
                     <h3 style={videoTitleStyle}>{video.title}</h3>
