@@ -109,6 +109,7 @@ const Navbar = () => {
             </button>
           )}
           
+          {/* Comment out the profile button
           <div 
             className={`profile-button ${isLoggedIn ? 'logged-in' : ''}`}
             onClick={() => {
@@ -121,6 +122,7 @@ const Navbar = () => {
           >
             <FaUser size={14} />
           </div>
+          */}
         </div>
 
         {/* Mobile Menu Button - only in mobile, to the left of the logo */}

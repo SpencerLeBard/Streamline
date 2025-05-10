@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { getChannelData } from '../context/VideoData';
 
 const ChannelPage = () => {
   const { channelId } = useParams();
@@ -11,46 +12,12 @@ const ChannelPage = () => {
     // Simulate API call
     setLoading(true);
     
-    // Mock data
+    // Get channel data from our data source
     setTimeout(() => {
-      const mockChannel = {
-        id: channelId,
-        name: 'Sample Channel',
-        subscribers: 52000,
-        description: 'This is a sample channel for video content creators.',
-        avatar: 'https://via.placeholder.com/100',
-        banner: 'https://via.placeholder.com/1200x300'
-      };
+      const data = getChannelData(channelId);
       
-      const mockVideos = [
-        {
-          id: '1',
-          title: 'Getting Started with React',
-          description: 'Learn the basics of React in this beginner-friendly tutorial',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 12000,
-          timestamp: '1 week ago'
-        },
-        {
-          id: '2',
-          title: 'Advanced CSS Techniques',
-          description: 'Master CSS with these advanced techniques',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 8000,
-          timestamp: '2 weeks ago'
-        },
-        {
-          id: '3',
-          title: 'Node.js Crash Course',
-          description: 'Get up to speed with Node.js quickly',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 6500,
-          timestamp: '1 month ago'
-        }
-      ];
-      
-      setChannel(mockChannel);
-      setVideos(mockVideos);
+      setChannel(data.channel);
+      setVideos(data.videos);
       setLoading(false);
     }, 500);
   }, [channelId]);

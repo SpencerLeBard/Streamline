@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye, FaFire, FaRandom, FaStar } from 'react-icons/fa';
+import { generateExploreVideos } from '../context/VideoData';
 import './ExplorePage.css';
 
 const ExplorePage = () => {
@@ -26,29 +27,11 @@ const ExplorePage = () => {
 
     // Simulate API call to get videos for the selected category
     setTimeout(() => {
-      const mockVideos = generateMockVideos(selectedCategory, 12);
+      const mockVideos = generateExploreVideos(selectedCategory, 12);
       setVideos(mockVideos);
       setLoading(false);
     }, 800);
   }, [selectedCategory]);
-
-  const generateMockVideos = (category, count) => {
-    const videos = [];
-    
-    for (let i = 1; i <= count; i++) {
-      videos.push({
-        id: `${category.toLowerCase()}-${i}`,
-        title: `${category} Video ${i}: Amazing Content for Everyone`,
-        views: Math.floor(Math.random() * 900000) + 100000,
-        timestamp: `${Math.floor(Math.random() * 4) + 1} ${['days', 'weeks', 'months'][Math.floor(Math.random() * 3)]} ago`,
-        thumbnail: `https://via.placeholder.com/320x180/ffaa${i}0/ffffff?text=${category}+${i}`,
-        channelName: `${category} Channel ${i}`,
-        channelId: i
-      });
-    }
-    
-    return videos;
-  };
 
   // Helper function to get the color for a category
   const getCategoryColor = (categoryName) => {

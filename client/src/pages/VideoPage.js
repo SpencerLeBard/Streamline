@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useResponsive } from '../utils/responsive';
+import { getSingleVideoById, getRelatedVideos } from '../context/VideoData';
 import './VideoPage.css';
 
 const VideoPage = () => {
@@ -15,59 +16,12 @@ const VideoPage = () => {
     setLoading(true);
     
     setTimeout(() => {
-      // Mock video data
-      const mockVideo = {
-        id: videoId,
-        title: 'How to Build Modern Web Applications',
-        description: 'In this comprehensive tutorial, we explore the fundamentals of building modern web applications using React, Node.js, and MongoDB. Learn about state management, routing, API integration, and more.',
-        videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        thumbnail: 'https://via.placeholder.com/640x360',
-        views: 125000,
-        likes: 3200,
-        createdAt: '2023-09-15T14:48:00.000Z',
-        category: 'Technology',
-        channelName: 'Web Dev Tutorials',
-        channelId: '1',
-        channelAvatar: 'https://via.placeholder.com/40',
-        subscribers: 52000
-      };
+      // Get video data and related videos from our data source
+      const videoData = getSingleVideoById(videoId);
+      const relatedVids = getRelatedVideos(videoId);
       
-      // Mock related videos
-      const mockRelatedVideos = [
-        {
-          id: '2',
-          title: 'React Hooks Explained',
-          description: 'Learn how to use React Hooks effectively',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 75000,
-          timestamp: '1 month ago',
-          channelName: 'React Masters',
-          channelId: '2'
-        },
-        {
-          id: '3',
-          title: 'Node.js REST API Tutorial',
-          description: 'Build a complete REST API with Node.js and Express',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 42000,
-          timestamp: '2 weeks ago',
-          channelName: 'Backend Dev',
-          channelId: '3'
-        },
-        {
-          id: '4',
-          title: 'MongoDB for Beginners',
-          description: 'Getting started with MongoDB database',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 35000,
-          timestamp: '3 months ago',
-          channelName: 'Database Pro',
-          channelId: '4'
-        }
-      ];
-      
-      setVideo(mockVideo);
-      setRelatedVideos(mockRelatedVideos);
+      setVideo(videoData);
+      setRelatedVideos(relatedVids);
       setLoading(false);
     }, 800);
   }, [videoId]);

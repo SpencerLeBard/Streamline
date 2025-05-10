@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FaSearch, FaEye, FaThumbsUp, FaClock } from 'react-icons/fa';
 import { useResponsive } from '../utils/responsive';
+import { getSearchResults } from '../context/VideoData';
 import './SearchPage.css';
 
 const SearchPage = () => {
@@ -24,58 +25,8 @@ const SearchPage = () => {
     
     // Simulate API call for search results
     setTimeout(() => {
-      const mockResults = [
-        {
-          id: '1',
-          title: `Results for "${query}": JavaScript Tutorial`,
-          description: 'Learn the basics of JavaScript programming',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 15000,
-          likes: 350,
-          timestamp: '2 weeks ago',
-          channelName: 'Code Masters',
-          channelId: '1',
-          category: 'Education',
-        },
-        {
-          id: '2',
-          title: `${query} in React: useState and useEffect Hooks`,
-          description: 'Understanding React Hooks with examples',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 8500,
-          likes: 220,
-          timestamp: '3 days ago',
-          channelName: 'React Experts',
-          channelId: '2',
-          category: 'Technology',
-        },
-        {
-          id: '3',
-          title: `Building ${query} APIs with Node.js`,
-          description: 'Complete guide to building APIs with Node.js',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 12000,
-          likes: 300,
-          timestamp: '1 week ago',
-          channelName: 'Backend Dev',
-          channelId: '3',
-          category: 'Technology',
-        },
-        {
-          id: '4',
-          title: `${query} CSS Grid Layout Explained`,
-          description: 'Master CSS Grid layout in 20 minutes',
-          thumbnail: 'https://via.placeholder.com/320x180',
-          views: 6000,
-          likes: 150,
-          timestamp: '1 month ago',
-          channelName: 'CSS Wizards',
-          channelId: '4',
-          category: 'Education',
-        },
-      ];
-      
-      setSearchResults(mockResults);
+      const results = getSearchResults(query);
+      setSearchResults(results);
       setLoading(false);
     }, 800);
   };
