@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FaSearch, FaEye, FaThumbsUp, FaClock } from 'react-icons/fa';
 import { useResponsive } from '../utils/responsive';
+import './SearchPage.css';
 
 const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -87,222 +88,65 @@ const SearchPage = () => {
     }
   };
 
-  // Styles
-  const pageStyle = {
-    backgroundColor: '#ffffff',
-    minHeight: 'calc(100vh - 70px)', // Adjust for navbar height
-    width: '100%',
-    overflowX: 'hidden'
-  };
-
-  const mainContentStyle = {
-    padding: isMobile ? '16px' : '20px 40px',
-    maxWidth: '1280px',
-    margin: '0 auto',
-    width: '100%'
-  };
-
-  const searchContainerStyle = {
-    width: '100%',
-    maxWidth: '640px',
-    margin: '0 auto 40px',
-    position: 'relative'
-  };
-
-  const inputStyle = {
-    width: '100%',
-    padding: '12px 20px',
-    paddingRight: '60px',
-    borderRadius: '24px',
-    border: '1px solid #e5e5e5',
-    fontSize: '16px',
-    outline: 'none'
-  };
-
-  const buttonStyle = {
-    position: 'absolute',
-    right: '8px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    height: '40px',
-    width: '40px',
-    borderRadius: '50%',
-    backgroundColor: '#f1f1f1',
-    border: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer'
-  };
-
-  const resultsContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px'
-  };
-
-  const resultCardStyle = {
-    display: 'flex',
-    flexDirection: isMobile ? 'column' : 'row',
-    padding: isMobile ? '0' : '16px',
-    borderRadius: '12px',
-    backgroundColor: '#fff',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-    gap: isMobile ? '0' : '20px',
-    overflow: 'hidden'
-  };
-
-  const thumbnailContainerStyle = {
-    width: '100%',
-    backgroundColor: '#e0e7ff',
-    padding: isMobile ? '16px' : '0',
-    display: isMobile ? 'block' : 'none',
-  };
-
-  const thumbnailStyle = {
-    width: isMobile ? '100%' : '240px',
-    height: isMobile ? 'auto' : '135px',
-    objectFit: 'cover',
-    borderRadius: '8px',
-    backgroundColor: '#e0e7ff'
-  };
-
-  const infoContainerStyle = {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    padding: isMobile ? '16px' : '0',
-    backgroundColor: '#fff'
-  };
-
-  const titleStyle = {
-    fontSize: isMobile ? '16px' : '18px',
-    fontWeight: '500',
-    color: '#0f0f0f',
-    marginBottom: '8px',
-    textDecoration: 'none'
-  };
-
-  const descriptionStyle = {
-    fontSize: '14px',
-    color: '#606060',
-    marginBottom: '12px'
-  };
-
-  const channelNameStyle = {
-    fontSize: '14px',
-    color: '#606060',
-    textDecoration: 'none',
-    marginBottom: '8px'
-  };
-
-  const statsStyle = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    fontSize: '13px',
-    color: '#606060',
-    gap: '8px'
-  };
-
-  const statItemStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-    marginRight: '8px'
-  };
-
-  const loadingStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '200px',
-    fontSize: '18px',
-    color: '#606060'
-  };
-
-  const noResultsStyle = {
-    textAlign: 'center',
-    padding: '40px 0',
-    color: '#606060',
-    fontSize: '16px'
-  };
-
   return (
-    <div style={pageStyle}>
-      <div style={mainContentStyle}>
-        <div style={searchContainerStyle}>
+    <div className="search-page">
+      <div className="main-content">
+        <div className="search-container">
           <form onSubmit={handleSearch}>
             <input
               type="text"
               placeholder="Search videos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={inputStyle}
+              className="search-input"
             />
-            <button type="submit" style={buttonStyle}>
+            <button type="submit" className="search-button">
               <FaSearch color="#606060" size={18} />
             </button>
           </form>
         </div>
 
         {loading ? (
-          <div style={loadingStyle}>
+          <div className="loading">
             <div>Searching for videos...</div>
           </div>
         ) : searchResults.length === 0 ? (
-          <div style={noResultsStyle}>
+          <div className="no-results">
             {searchParams.get('q') 
               ? `No results found for "${searchParams.get('q')}"` 
               : 'Enter a search term to find videos'}
           </div>
         ) : (
-          <div style={resultsContainerStyle}>
-            {searchResults.map((result) => (
-              <div key={result.id} style={resultCardStyle}>
-                {isMobile ? (
-                  <Link to={`/video/${result.id}`} style={{ 
-                    width: '100%',
-                    display: 'block',
-                    ...thumbnailContainerStyle
-                  }}>
-                    <img 
-                      src={result.thumbnail} 
-                      alt="" 
-                      style={thumbnailStyle}
-                    />
-                  </Link>
-                ) : (
-                  <Link to={`/video/${result.id}`} style={{ width: 'auto' }}>
-                    <img 
-                      src={result.thumbnail} 
-                      alt="" 
-                      style={thumbnailStyle}
-                    />
-                  </Link>
-                )}
-                <div style={infoContainerStyle}>
-                  <Link to={`/video/${result.id}`} style={{ textDecoration: 'none' }}>
-                    <h3 style={titleStyle}>{result.title}</h3>
-                  </Link>
-                  <p style={descriptionStyle}>{result.description}</p>
-                  <Link to={`/channel/${result.channelId}`} style={channelNameStyle}>
-                    {result.channelName}
-                  </Link>
-                  <div style={statsStyle}>
-                    <div style={statItemStyle}>
-                      <FaEye size={12} />
-                      <span>{result.views.toLocaleString()} views</span>
-                    </div>
-                    <div style={statItemStyle}>
-                      <FaThumbsUp size={12} />
-                      <span>{result.likes}</span>
-                    </div>
-                    <div style={statItemStyle}>
-                      <FaClock size={12} />
-                      <span>{result.timestamp}</span>
+          <div className="video-grid">
+            {searchResults.map((video) => (
+              <div key={video.id} className="video-card">
+                <Link to={`/video/${video.id}`} className="link-style">
+                  <img
+                    src={video.thumbnail}
+                    alt=""
+                    className="thumbnail"
+                  />
+                  <div className="video-info">
+                    <h3 className="video-title">{video.title}</h3>
+                    <Link to={`/channel/${video.channelId}`} className="channel-name">
+                      {video.channelName}
+                    </Link>
+                    <div className="video-stats">
+                      <div className="stat-item">
+                        <FaEye size={12} />
+                        <span>{video.views.toLocaleString()} views</span>
+                      </div>
+                      <div className="stat-item">
+                        <FaThumbsUp size={12} />
+                        <span>{video.likes}</span>
+                      </div>
+                      <div className="stat-item">
+                        <FaClock size={12} />
+                        <span>{video.timestamp}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>

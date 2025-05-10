@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye, FaFire, FaRandom, FaStar } from 'react-icons/fa';
+import './ExplorePage.css';
 
 const ExplorePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('Trending');
@@ -49,130 +50,6 @@ const ExplorePage = () => {
     return videos;
   };
 
-  // Styles
-  const pageStyle = {
-    backgroundColor: '#f9f9f9',
-    minHeight: 'calc(100vh - 70px)', // Adjust for navbar height
-    width: '100%',
-    overflowX: 'hidden'
-  };
-
-  const mainContentStyle = {
-    padding: '20px 40px',
-    maxWidth: '1280px',
-    margin: '0 auto',
-    width: '100%'
-  };
-
-  const headerStyle = {
-    fontSize: '28px',
-    fontWeight: 'bold',
-    marginBottom: '24px',
-    color: '#0f0f0f',
-    textAlign: 'center'
-  };
-
-  const categoriesContainerStyle = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '16px',
-    marginBottom: '40px'
-  };
-
-  const categoryItemStyle = (category) => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '10px 20px',
-    borderRadius: '24px',
-    fontSize: '16px',
-    fontWeight: selectedCategory === category.name ? 'bold' : 'normal',
-    backgroundColor: selectedCategory === category.name ? category.color : '#fff',
-    color: selectedCategory === category.name ? '#fff' : '#333',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    border: `2px solid ${category.color}`
-  });
-
-  const videoGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-    gap: '24px'
-  };
-
-  const videoCardStyle = {
-    borderRadius: '16px',
-    overflow: 'hidden',
-    backgroundColor: '#fff',
-    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.1)',
-    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-    cursor: 'pointer',
-    transform: 'translateY(0)',
-    ':hover': {
-      transform: 'translateY(-8px)',
-      boxShadow: '0 12px 20px rgba(0, 0, 0, 0.15)'
-    }
-  };
-
-  const thumbnailContainerStyle = {
-    position: 'relative',
-    overflow: 'hidden',
-    borderRadius: '16px 16px 0 0',
-    backgroundColor: '#e0e7ff'
-  };
-
-  const thumbnailStyle = {
-    width: '100%',
-    height: '180px',
-    objectFit: 'cover',
-    transition: 'transform 0.5s ease',
-    ':hover': {
-      transform: 'scale(1.05)'
-    }
-  };
-
-  const videoInfoStyle = {
-    padding: '16px'
-  };
-
-  const videoTitleStyle = {
-    fontSize: '16px',
-    fontWeight: '600',
-    color: '#0f0f0f',
-    marginBottom: '8px',
-    display: '-webkit-box',
-    WebkitLineClamp: '2',
-    WebkitBoxOrient: 'vertical',
-    overflow: 'hidden',
-    textDecoration: 'none'
-  };
-
-  const channelNameStyle = {
-    fontSize: '14px',
-    color: '#606060',
-    textDecoration: 'none',
-    marginBottom: '6px'
-  };
-
-  const viewsStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-    fontSize: '13px',
-    color: '#606060'
-  };
-
-  const loadingStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '300px',
-    fontSize: '18px',
-    color: '#606060'
-  };
-
   // Helper function to get the color for a category
   const getCategoryColor = (categoryName) => {
     const category = categories.find(c => c.name === categoryName);
@@ -180,17 +57,21 @@ const ExplorePage = () => {
   };
 
   return (
-    <div style={pageStyle}>
-      <div style={mainContentStyle}>
-        <h1 style={headerStyle}>Explore</h1>
+    <div className="explore-page">
+      <div className="main-content">
+        <h1 className="header">Explore</h1>
 
         {/* Categories */}
-        <div style={categoriesContainerStyle}>
+        <div className="categories-container">
           {categories.map((category) => (
             <div
               key={category.name}
-              style={categoryItemStyle(category)}
+              className={`category-item ${selectedCategory === category.name ? 'active' : ''}`}
               onClick={() => setSelectedCategory(category.name)}
+              style={{
+                borderColor: category.color,
+                backgroundColor: selectedCategory === category.name ? category.color : '#fff'
+              }}
             >
               <span>{category.icon}</span>
               <span>{category.name}</span>
@@ -200,27 +81,27 @@ const ExplorePage = () => {
 
         {/* Videos */}
         {loading ? (
-          <div style={loadingStyle}>
+          <div className="loading">
             <div>Loading {selectedCategory} videos...</div>
           </div>
         ) : (
-          <div style={videoGridStyle}>
+          <div className="video-grid">
             {videos.map((video) => (
               <Link key={video.id} to={`/video/${video.id}`} style={{ textDecoration: 'none' }}>
-                <div style={videoCardStyle}>
-                  <div style={thumbnailContainerStyle}>
+                <div className="video-card">
+                  <div className="thumbnail-container">
                     <img
                       src={video.thumbnail}
                       alt=""
-                      style={thumbnailStyle}
+                      className="thumbnail"
                     />
                   </div>
-                  <div style={videoInfoStyle}>
-                    <h3 style={videoTitleStyle}>{video.title}</h3>
-                    <Link to={`/channel/${video.channelId}`} style={channelNameStyle}>
+                  <div className="video-info">
+                    <h3 className="video-title">{video.title}</h3>
+                    <Link to={`/channel/${video.channelId}`} className="channel-name">
                       {video.channelName}
                     </Link>
-                    <div style={viewsStyle}>
+                    <div className="views">
                       <FaEye size={12} />
                       <span>{video.views.toLocaleString()} views • {video.timestamp}</span>
                     </div>

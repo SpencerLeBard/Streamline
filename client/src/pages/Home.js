@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye, FaThumbsUp, FaClock } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
+import './Home.css';
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -36,156 +37,6 @@ const Home = () => {
     'Entertainment',
     'Technology',
   ];
-
-  // Inline styles for consistent appearance with navbar and sidebar
-  const pageStyle = {
-    backgroundColor: '#ffffff',
-    minHeight: '100vh',
-    width: '100%',
-    overflowX: 'hidden'
-  };
-
-  const mainContentStyle = {
-    padding: isMobileView ? '16px' : '20px 40px',
-    maxWidth: '1280px',
-    margin: '0 auto',
-    width: '100%'
-  };
-
-  const categoryBarStyle = {
-    display: 'flex',
-    overflow: 'auto',
-    padding: '16px 0',
-    scrollbarWidth: 'none', // Hide scrollbar in Firefox
-    msOverflowStyle: 'none', // Hide scrollbar in IE/Edge
-  };
-
-  // Custom scrollbar hiding for webkit browsers
-  const scrollbarHideStyle = `
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    
-    @media (max-width: 768px) {
-      .video-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)) !important;
-      }
-      
-      .video-card:hover {
-        transform: none !important;
-      }
-    }
-    
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .video-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
-      }
-    }
-  `;
-
-  const categoryButtonStyle = (isSelected) => ({
-    padding: '8px 16px',
-    margin: '0 8px 0 0',
-    borderRadius: '4px',
-    border: 'none',
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
-    backgroundColor: isSelected ? '#6366f1' : '#f1f1f1',
-    color: isSelected ? '#ffffff' : '#606060',
-    fontWeight: isSelected ? '500' : 'normal',
-    transition: 'background-color 0.2s, color 0.2s'
-  });
-
-  const videoGridStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-    gap: isMobileView ? '16px' : '24px',
-    marginTop: '20px'
-  };
-
-  const videoCardStyle = {
-    borderRadius: '12px',
-    overflow: 'hidden',
-    backgroundColor: '#ffffff',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-    ':hover': {
-      transform: isMobileView ? 'none' : 'translateY(-5px)',
-      boxShadow: isMobileView ? '0 2px 10px rgba(0, 0, 0, 0.1)' : '0 8px 20px rgba(0, 0, 0, 0.15)'
-    }
-  };
-
-  const thumbnailStyle = {
-    width: '100%',
-    height: isMobileView ? '200px' : '180px',
-    objectFit: 'cover',
-    display: 'block',
-    backgroundColor: '#e0e7ff'
-  };
-
-  const videoInfoStyle = {
-    padding: isMobileView ? '12px' : '16px'
-  };
-
-  const videoTitleStyle = {
-    fontSize: isMobileView ? '15px' : '16px',
-    fontWeight: '500',
-    color: '#0f0f0f',
-    marginBottom: '8px',
-    lineHeight: '1.4',
-    display: '-webkit-box',
-    WebkitLineClamp: '2',
-    WebkitBoxOrient: 'vertical',
-    overflow: 'hidden',
-    textDecoration: 'none'
-  };
-
-  const channelNameStyle = {
-    fontSize: '14px',
-    color: '#606060',
-    textDecoration: 'none',
-    display: 'block',
-    marginBottom: '6px'
-  };
-
-  const linkStyle = {
-    textDecoration: 'none'
-  };
-
-  const videoStatsStyle = {
-    display: 'flex',
-    fontSize: '13px',
-    color: '#606060',
-    alignItems: 'center',
-    gap: isMobileView ? '10px' : '16px',
-    flexWrap: 'wrap'
-  };
-
-  const statItemStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px'
-  };
-
-  const loadingStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 'calc(100vh - 70px)',
-    fontSize: '18px',
-    color: '#606060'
-  };
-
-  const emptyStateStyle = {
-    textAlign: 'center',
-    padding: '40px 0',
-    color: '#606060',
-    fontSize: '16px'
-  };
 
   /* ─────────────────────────── load mock data ─────────────────────────── */
   useEffect(() => {
@@ -248,117 +99,125 @@ const Home = () => {
           thumbnail: 'https://via.placeholder.com/320x180',
           views: 9500,
           likes: 280,
-          timestamp: '2 days ago',
-          channelName: 'JS Masters',
+          timestamp: '2 weeks ago',
+          channelName: 'JS Mastery',
           channelId: '5',
           category: 'Technology',
         },
         {
           id: '6',
-          title: 'React vs Vue vs Angular - Which One to Choose?',
-          description: 'A detailed comparison of popular frontend frameworks',
+          title: 'TypeScript Crash Course - Why You Should Use It',
+          description: 'Learn TypeScript basics in 30 minutes',
           thumbnail: 'https://via.placeholder.com/320x180',
-          views: 18000,
-          likes: 450,
+          views: 7200,
+          likes: 190,
           timestamp: '4 days ago',
-          channelName: 'Framework Compare',
+          channelName: 'TypeScript Guru',
           channelId: '6',
           category: 'Technology',
         },
         {
           id: '7',
-          title: 'Responsive Web Design Principles for Beginners',
-          description: 'Learn how to create responsive websites',
+          title: 'MongoDB vs PostgreSQL - Which Database to Choose?',
+          description: 'Comparing popular database options for your next project',
           thumbnail: 'https://via.placeholder.com/320x180',
-          views: 5000,
-          likes: 120,
-          timestamp: '3 weeks ago',
-          channelName: 'Web Design Pro',
+          views: 5600,
+          likes: 130,
+          timestamp: '1 week ago',
+          channelName: 'Database Pro',
           channelId: '7',
-          category: 'Education',
+          category: 'Technology',
         },
         {
           id: '8',
-          title: 'TypeScript Crash Course for JavaScript Developers',
-          description: 'Quick introduction to TypeScript for JS developers',
+          title: 'Learn Docker in 1 Hour - Containerize Your Applications',
+          description: 'Quick start guide to Docker containers',
           thumbnail: 'https://via.placeholder.com/320x180',
-          views: 7200,
-          likes: 210,
-          timestamp: '5 days ago',
-          channelName: 'Type Masters',
+          views: 11000,
+          likes: 320,
+          timestamp: '3 weeks ago',
+          channelName: 'DevOps Channel',
           channelId: '8',
-          category: 'Education',
+          category: 'Technology',
         },
       ];
 
-      setVideos(mockVideos);
+      // Filter videos if a category is selected
+      const filteredVideos = selectedCategory === 'All'
+        ? mockVideos
+        : mockVideos.filter(video => video.category === selectedCategory);
+      
+      setVideos(filteredVideos);
       setLoading(false);
-    }, 1000);
+    }, 800);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [selectedCategory]);
 
-  /* ────────────────────────────── handlers ────────────────────────────── */
   const handleCategoryChange = (category) => setSelectedCategory(category);
 
-  /* ─────────────────────────────── render ─────────────────────────────── */
   if (loading) {
-    return (
-      <div style={loadingStyle}>
-        <div>Loading videos...</div>
-      </div>
-    );
+    return <div className="loading">Loading videos...</div>;
   }
 
   return (
-    <>
-      <style>{scrollbarHideStyle}</style>
-      <div style={pageStyle}>
-        {/* Main content */}
-        <div style={mainContentStyle}>
-          {/* Video grid */}
-          {videos.length === 0 ? (
-            <div style={emptyStateStyle}>
-              No videos found. Try another category.
-            </div>
-          ) : (
-            <div style={videoGridStyle}>
-              {videos.map((video) => (
-                <div key={video.id} style={videoCardStyle}>
-                  <Link to={`/video/${video.id}`} style={linkStyle}>
-                    <img
-                      src={video.thumbnail}
-                      alt=""
-                      style={thumbnailStyle}
-                    />
-                    <div style={videoInfoStyle}>
-                      <h3 style={videoTitleStyle}>{video.title}</h3>
-                      <Link to={`/channel/${video.channelId}`} style={channelNameStyle}>
-                        {video.channelName}
-                      </Link>
-                      <div style={videoStatsStyle}>
-                        <div style={statItemStyle}>
-                          <FaEye />
-                          <span>{video.views.toLocaleString()} views</span>
-                        </div>
-                        <div style={statItemStyle}>
-                          <FaThumbsUp />
-                          <span>{video.likes} likes</span>
-                        </div>
-                        <div style={statItemStyle}>
-                          <FaClock />
-                          <span>{video.timestamp}</span>
-                        </div>
+    <div className="home-page">
+      <div className="main-content">
+        {/* Category filters */}
+        <div className="category-bar hide-scrollbar">
+          {categories.map(category => (
+            <button
+              key={category}
+              className={`category-button ${selectedCategory === category ? 'active' : ''}`}
+              onClick={() => handleCategoryChange(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Video grid */}
+        {videos.length === 0 ? (
+          <div className="empty-state">
+            No videos found in this category.
+          </div>
+        ) : (
+          <div className="video-grid">
+            {videos.map(video => (
+              <div key={video.id} className="video-card">
+                <Link to={`/video/${video.id}`} className="link-style">
+                  <img
+                    src={video.thumbnail}
+                    alt=""
+                    className="thumbnail"
+                  />
+                  <div className="video-info">
+                    <h3 className="video-title">{video.title}</h3>
+                    <Link to={`/channel/${video.channelId}`} className="channel-name">
+                      {video.channelName}
+                    </Link>
+                    <div className="video-stats">
+                      <div className="stat-item">
+                        <FaEye size={12} />
+                        <span>{video.views.toLocaleString()} views</span>
+                      </div>
+                      <div className="stat-item">
+                        <FaThumbsUp size={12} />
+                        <span>{video.likes}</span>
+                      </div>
+                      <div className="stat-item">
+                        <FaClock size={12} />
+                        <span>{video.timestamp}</span>
                       </div>
                     </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
